@@ -1,5 +1,5 @@
 homepage: "https://consentik.com"
 documentation: "https://consentik.com/how-to-set-the-google-tag-manager-template-for-consentik-gdpr-cmp/"
 versions:
-  - sha: 5f02a788b90ae804f86b04aa24af8937e567874a
+  - sha: 7d49d77695b50c89d010d2f4931370480015952d
     changeNotes: Initial release.
