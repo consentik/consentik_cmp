@@ -1,6 +1,10 @@
 homepage: "https://consentik.com"
 documentation: "https://consentik.com/how-to-set-the-google-tag-manager-template-for-consentik-gdpr-cmp/"
 versions:
+# Latest version
+  - sha: 3479d02a1bab4aa628d378016364bb42f36269ef
+    changeNotes: Update region setting.
+# Older version
   - sha: db42fab1142b3c9f5bcfa15d84798bff86b0c5fb
     changeNotes: Update cookie name and consent key.
   - sha: 7d49d77695b50c89d010d2f4931370480015952d
