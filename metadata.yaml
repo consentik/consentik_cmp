@@ -2,9 +2,11 @@ homepage: "https://consentik.com"
 documentation: "https://consentik.com/how-to-set-the-google-tag-manager-template-for-consentik-gdpr-cmp/"
 versions:
 # Latest version
+- sha: 38c2c4b1ad2ff82c391cb2eeb13ca5b212d5dc06
+  changeNotes: Grant consent outside the configured regions to maintain measurement, and trim region codes so entries like "ES, DE, RO" scope correctly.
+# Older versions
 - sha: 53c5c5cad54d5a5e107bef194b50eb668cb7ba0f
   changeNotes: Update Terms of service.
-# Older versions
 - sha: 3479d02a1bab4aa628d378016364bb42f36269ef
   changeNotes: Update region setting.
 - sha: db42fab1142b3c9f5bcfa15d84798bff86b0c5fb
