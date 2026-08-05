@@ -11,7 +11,7 @@ ___INFO___
 {
   "type": "TAG",
   "id": "cvt_NC65N",
-  "version": 1,
+  "version": 2,
   "securityGroups": [],
   "displayName": "Consentik GDPR CMP",
   "description": "Consent Mode template for the Consentik Consent Management Platform (CMP), built to integrate seamlessly with the Shopify App: Consentik GDPR Cookie Banner",
@@ -214,11 +214,37 @@ const consentikInit = (data) => {
     personalization_storage: data.functional,
     wait_for_update: data.waitForUpdate,
   };
-  if(data.region && data.region != '') {
-    defaultConsent.region = data.region.toUpperCase().split(",");
+  // The Region field's help text suggests "ES, DE, RO", which splits into
+  // ["ES", " DE", " RO"] - the padded codes match no region, so every entry after
+  // the first would silently lose its scoping. Trim and drop empties.
+  const regions = data.region && data.region != ''
+    ? data.region.toUpperCase().split(',').map(code => code.trim()).filter(code => code != '')
+    : [];
+
+  if (regions.length > 0) {
+    defaultConsent.region = regions;
   }
   log({defaultConsent:defaultConsent});
   setDefaultConsentState(defaultConsent);
+
+  // Visitors outside the configured regions never see the banner, so no update
+  // command can ever reach them. Google requires consent to be granted where the
+  // banner does not appear, in order to maintain measurement. Mirror the
+  // region-scoped default above with a global granted one - Google applies the
+  // more specific region-scoped command to in-region visitors, so consent inside
+  // the target regions is unaffected.
+  if (regions.length > 0) {
+    setDefaultConsentState({
+      security_storage: 'granted',
+      ad_storage: 'granted',
+      ad_personalization: 'granted',
+      ad_user_data: 'granted',
+      analytics_storage: 'granted',
+      functionality_storage: 'granted',
+      personalization_storage: 'granted',
+      wait_for_update: data.waitForUpdate
+    });
+  }
 
   gtagSet('ads_data_redaction', data.adsDataRedaction);
   gtagSet('url_passthrough', data.urlPassthrough);
